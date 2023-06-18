@@ -1,0 +1,103 @@
+# 0.
+from django.contrib.auth.models import User
+from news.models import * 
+
+User.objects.all().delete()
+Author.objects.all().delete()
+Category.objects.all().delete()
+Post.objects.all().delete()
+PostCategory.objects.all().delete()
+Comment.objects.all().delete()
+
+# 1.
+user1 = User.objects.create(username="Alice", password="")
+user2 = User.objects.create(username="Bob", password="")
+
+# 2. 
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user2)
+
+# 3.
+cat1 = Category.objects.create(name="Юмор")
+cat2 = Category.objects.create(name="Экономика")
+cat3 = Category.objects.create(name="Спорт")
+cat4 = Category.objects.create(name="Криминальная хроника")
+
+# 4.
+post1 = Post.objects.create(author=author1, type="NEW", title="Очевидное-невероятное", text="Пьяный енот, укравший рубль, сумел убежать от преследования. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy. Fusce aliquet pede non pede. Suspendisse dapibus lorem pellentesque magna. Integer nulla. Donec blandit feugiat ligula. Donec hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien. Donec ut est in lectus consequat consequat. Etiam eget dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique. Proin nec augue.")
+
+post2 = Post.objects.create(author=author1, type="ARTL", title="Наклонности енотов", text="<Монография о енотах>. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy. Fusce aliquet pede non pede. Suspendisse dapibus lorem pellentesque magna. Integer nulla. Donec blandit feugiat ligula. Donec hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien. Donec ut est in lectus consequat consequat. Etiam eget dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique. Proin nec augue. Quisque aliquam tempor magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc ac magna. Maecenas odio dolor, vulputate vel, auctor ac, accumsan id, felis. Pellentesque cursus sagittis felis. Pellentesque porttitor, velit lacinia egestas auctor, diam eros tempus arcu, nec vulputate augue magna vel risus. Cras non magna vel ante adipiscing rhoncus. Vivamus a mi. Morbi neque. Aliquam erat volutpat. Integer ultrices lobortis eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin semper, ante vitae sollicitudin posuere, metus quam iaculis nibh, vitae scelerisque nunc massa eget pede. Sed velit urna, interdum vel, ultricies vel, faucibus at, quam. Donec elit est, consectetuer eget, consequat quis, tempus quis, wisi.")
+
+post3 = Post.objects.create(author=author2, type="ARTL", title="Прогноз развития экономики", text="LOL")
+
+# 5.
+pc11 = PostCategory.objects.create(post=post1, category=cat1)
+pc12 = PostCategory.objects.create(post=post1, category=cat2)
+pc13 = PostCategory.objects.create(post=post1, category=cat3)
+pc14 = PostCategory.objects.create(post=post1, category=cat4)
+
+pc21 = PostCategory.objects.create(post=post2, category=cat3)
+pc22 = PostCategory.objects.create(post=post2, category=cat4)
+
+pc31 = PostCategory.objects.create(post=post3, category=cat1)
+pc32 = PostCategory.objects.create(post=post3, category=cat2)
+
+# 6.  attention - self-comment !
+com11 = Comment.objects.create(post=post1, user=user1, text="Какая же смешная новость!")
+com12 = Comment.objects.create(post=post1, user=user2, text="Да, норм")
+
+com21 = Comment.objects.create(post=post2, user=user2, text="Ну и нудятина!")
+
+com31 = Comment.objects.create(post=post3, user=user1, text="(")
+
+# 7.
+post1.like()
+post1.like()
+post1.like()
+post1.like()
+post1.dislike()
+
+post2.like()
+post2.like()
+post2.like()
+post2.dislike()
+post2.dislike()
+
+post3.like()
+post3.dislike()
+post3.dislike()
+post3.dislike()
+post3.dislike()
+
+com11.like()
+com11.like()
+com11.dislike()
+
+com12.like()
+
+com21.dislike()
+com21.dislike()
+
+
+com31.like()
+com31.like()
+com31.like()
+com31.dislike()
+
+# 8.
+author1.update_rating()
+author2.update_rating()
+
+9.
+Author.objects.all().values('user__username', 'rating').order_by('-rating').first()
+
+10.
+best_post = Post.objects.all().values('pk', 'creation_date', 'author__user__username', 'rating', 'title',).order_by('-rating').first()
+best_post_pk, best_post_cd, best_post_author_name, best_post_rating, best_post_title = best_post['pk'], best_post['creation_date'], best_post['author__user__username'], best_post['rating'], best_post['title']
+best_post_preview = Post.objects.get(pk=best_post_pk).preview() 
+
+best_post_cd, best_post_author_name, best_post_rating, best_post_title, best_post_preview
+
+11.
+Comment.objects.filter(post__pk=best_post_pk).values("creation_date", "user__username", "rating", "text")
+
