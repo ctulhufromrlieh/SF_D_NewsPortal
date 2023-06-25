@@ -1,0 +1,27 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+<!-- Название у нас будет products -->
+{% block title %}
+    Новости
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+    <h1>Новости</h1>
+    <h2>Всего новостей: {{ news|length }}</h2>
+    {% if news %}
+        {% for curr_new in news %}
+            <hr>
+            <h3>{{ curr_new.title|censor }}</h3>
+            <h4><i>Автор: {{ curr_new.author.user.username }}</i></h4>
+            <h5>{{ curr_new.creation_date|date:'d.m.Y' }}</h5>
+            <p>{{ curr_new.text|truncatewords:20|censor }}</p>
+
+        {% endfor %}
+    {% else %}
+        <h2>Нет новостей!</h2>
+    {% endif %}
+{% endblock content %}

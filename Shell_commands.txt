@@ -88,16 +88,21 @@ com31.dislike()
 author1.update_rating()
 author2.update_rating()
 
-9.
+# 9.
 Author.objects.all().values('user__username', 'rating').order_by('-rating').first()
 
-10.
+# 10.
 best_post = Post.objects.all().values('pk', 'creation_date', 'author__user__username', 'rating', 'title',).order_by('-rating').first()
 best_post_pk, best_post_cd, best_post_author_name, best_post_rating, best_post_title = best_post['pk'], best_post['creation_date'], best_post['author__user__username'], best_post['rating'], best_post['title']
 best_post_preview = Post.objects.get(pk=best_post_pk).preview() 
 
 best_post_cd, best_post_author_name, best_post_rating, best_post_title, best_post_preview
 
-11.
+# 11.
 Comment.objects.filter(post__pk=best_post_pk).values("creation_date", "user__username", "rating", "text")
 
+# D3_6 bad words initialization
+BadWord.objects.all().delete()
+
+BadWord.objects.create(text='енот')
+BadWord.objects.create(text='рубл')
