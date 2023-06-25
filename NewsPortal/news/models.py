@@ -60,6 +60,9 @@ class Post(models.Model):
         else:
             return txt
 
+    def __str__(self):
+        return f"{self.creation_date} : {self.author.user.username}: {self.preview()}"
+
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -80,3 +83,7 @@ class Comment(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
+
+
+class BadWord(models.Model):
+    text = models.CharField(max_length=255, unique=True)

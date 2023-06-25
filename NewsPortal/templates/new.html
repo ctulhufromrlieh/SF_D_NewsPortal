@@ -1,0 +1,15 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+    Новость
+{% endblock title %}
+
+{% block content %}
+    <h1>{{ new.title|censor }}</h1>
+    <h3><i>Автор: {{ new.author.user.username }}</i></h3>
+    <h4>{{ new.creation_date|date:'d.m.Y' }}</h4>
+    <p>{{ new.text|censor }}</p>
+{% endblock content %}
