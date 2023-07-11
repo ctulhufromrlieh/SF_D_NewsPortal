@@ -8,3 +8,6 @@ from news.models import * <br>
 BadWord.objects.all().delete() <br>
 BadWord.objects.create(text='енот')<br>
 BadWord.objects.create(text='рубл')<br>
+
+D4.7 Task:
+Updated shell commands (for pagination check)

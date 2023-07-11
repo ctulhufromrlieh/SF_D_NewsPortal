@@ -1,6 +1,6 @@
 from django.db import models
-
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 
@@ -29,9 +29,15 @@ class Author(models.Model):
         self.rating = res
         self.save()
 
+    def __str__(self):
+        return self.user.username
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Post(models.Model):
@@ -44,6 +50,9 @@ class Post(models.Model):
     title = models.CharField(max_length=255, default="")
     text = models.TextField(default="")
     rating = models.IntegerField(default=0)
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 
     def like(self):
         self.rating += 1
@@ -59,6 +68,13 @@ class Post(models.Model):
             return txt[:124] + "..."
         else:
             return txt
+
+    @property
+    def type_caption(self):
+        if self.type == "NEW":
+            return "новость"
+        else:
+            return "статья"
 
     def __str__(self):
         return f"{self.creation_date} : {self.author.user.username}: {self.preview()}"
