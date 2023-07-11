@@ -63,3 +63,7 @@ def censor(value, censor_method=CENSOR_METHOD_ALL_EXCEPT_BEGIN):
     # res += "====" + "+".join(bad_words) + "===="
 
     return res
+
+@register.filter()
+def add(value1, value2):
+    return value1 + value2
