@@ -20,7 +20,30 @@
             <h5>({{ curr_new.type_caption }})</h5>
             <p>{{ curr_new.text|truncatewords:20|censor }}</p>
 
+            {% if type == 'NEW' %}
+                {% if perms.news.change_post %}
+                    <a href="{% url 'new_update' pk=curr_new.id %}">Изменить</a>
+                {% endif %}
+                {% if perms.news.delete_post %}
+                    <a href="{% url 'new_delete' curr_new.id %}">Удалить</a>
+                {% endif %}
+            {% else %}
+                {% if perms.news.change_post %}
+                    <a href="{% url 'article_update' pk=curr_new.id %}">Изменить</a>
+                {% endif %}
+                {% if perms.news.delete_post %}
+                    <a href="{% url 'article_delete' curr_new.id %}">Удалить</a>
+                {% endif %}
+            {% endif %}
+
         {% endfor %}
+
+        {% if perms.news.add_post %}
+            <hr>
+            <a href="{% url 'new_create' %}">Добавить новость</a>
+            <a href="{% url 'article_create' %}">Добавить статью</a>
+            <hr>
+        {% endif %}
     {% else %}
         <h2>Нет новостей!</h2>
     {% endif %}

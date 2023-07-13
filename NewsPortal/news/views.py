@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
@@ -60,7 +61,21 @@ class PostDetail(DetailView):
     context_object_name = 'new'
 
 
-class NewCreate(CreateView):
+class NewCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
+    form_class = NewForm
+    model = Post
+    # template_name = 'post_edit.html'
+    template_name = 'post_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['type'] = 'NEW'
+        return context
+
+
+class NewUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     form_class = NewForm
     model = Post
     template_name = 'post_edit.html'
@@ -71,18 +86,8 @@ class NewCreate(CreateView):
         return context
 
 
-class NewUpdate(UpdateView):
-    form_class = NewForm
-    model = Post
-    template_name = 'post_edit.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['type'] = 'NEW'
-        return context
-
-
-class NewDelete(DeleteView):
+class NewDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')
@@ -93,7 +98,21 @@ class NewDelete(DeleteView):
         return context
 
 
-class ArticleCreate(CreateView):
+class ArticleCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
+    form_class = ArticleForm
+    model = Post
+    # template_name = 'post_edit.html'
+    template_name = 'post_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['type'] = 'ARTL'
+        return context
+
+
+class ArticleUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     form_class = ArticleForm
     model = Post
     template_name = 'post_edit.html'
@@ -104,18 +123,8 @@ class ArticleCreate(CreateView):
         return context
 
 
-class ArticleUpdate(UpdateView):
-    form_class = ArticleForm
-    model = Post
-    template_name = 'post_edit.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['type'] = 'ARTL'
-        return context
-
-
-class ArticleDelete(DeleteView):
+class ArticleDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')
