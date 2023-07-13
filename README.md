@@ -15,10 +15,10 @@ Updated shell commands (for pagination check)
 #D5_8 Task: 
 #Use these commands for Group creation:
 
-from django.contrib.auth.models import Group, Permission
-Group.objects.all().delete()
-group1 = Group.objects.create(name="readers")
-group2 = Group.objects.create(name="authors")
-group2.permissions.add(Permission.objects.get(codename="add_post"))
-group2.permissions.add(Permission.objects.get(codename="change_post"))
-group2.permissions.add(Permission.objects.get(codename="delete_post"))
+from django.contrib.auth.models import Group, Permission <br>
+Group.objects.all().delete() <br>
+group1 = Group.objects.create(name="readers") <br>
+group2 = Group.objects.create(name="authors") <br>
+group2.permissions.add(Permission.objects.get(codename="add_post")) <br>
+group2.permissions.add(Permission.objects.get(codename="change_post")) <br>
+group2.permissions.add(Permission.objects.get(codename="delete_post")) <br>
