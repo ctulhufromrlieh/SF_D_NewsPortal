@@ -22,3 +22,15 @@ group2 = Group.objects.create(name="authors") <br>
 group2.permissions.add(Permission.objects.get(codename="add_post")) <br>
 group2.permissions.add(Permission.objects.get(codename="change_post")) <br>
 group2.permissions.add(Permission.objects.get(codename="delete_post")) <br>
+
+#D6_7 Task:
+
+1. For real mailing add EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, DEFAULT_FROM_EMAIL<
+to "NewsPortal/email_settings.py"<br><br>
+
+2. #Use these commands for subscription test:
+
+user3 = User.objects.create(username="qq", password="qq", email="qq@qq.qq")<br>
+user4 = User.objects.create(username="ww", password="ww", email="ww@ww.ww")<br>
+
+3. for last send date reset clear "django_apscheduler_djangojobexecution" table
