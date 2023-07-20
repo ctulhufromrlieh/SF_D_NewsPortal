@@ -81,8 +81,8 @@ class Post(models.Model):
 
 
 class PostCategory(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="postcategories")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="postcategories")
 
 
 class Comment(models.Model):
@@ -103,3 +103,19 @@ class Comment(models.Model):
 
 class BadWord(models.Model):
     text = models.CharField(max_length=255, unique=True)
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE,
+        related_name='subscriptions',
+    )
+    category = models.ForeignKey(
+        to='Category',
+        on_delete=models.CASCADE,
+        related_name='subscriptions',
+    )
+    # last_main_resend_date = models.DateTimeField(
+    #     default=None
+    # )
