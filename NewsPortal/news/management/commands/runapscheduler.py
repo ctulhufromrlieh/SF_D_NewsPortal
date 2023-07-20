@@ -51,7 +51,7 @@ def new_post_mass_notification_func():
         html_content = f"Новые статьи для {curr_sub_user.username}:<br>"
         for curr_post in curr_posts:
             text_content += f"{curr_post.title} от {curr_post.author.user.username}: http://127.0.0.1:8000{curr_post.get_absolute_url()}\n"
-            html_content += f'<a href="http://127.0.0.1:80000{curr_post.get_absolute_url()}">{curr_post.title}</a> от {curr_post.author.user.username}'
+            html_content += f'<a href="http://127.0.0.1:8000{curr_post.get_absolute_url()}">{curr_post.title}</a> от {curr_post.author.user.username}'
 
         text_contents = (text_content)
         html_contents = (html_content)
