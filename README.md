@@ -25,7 +25,7 @@ group2.permissions.add(Permission.objects.get(codename="delete_post")) <br>
 
 #D6_7 Task:
 
-1. For real mailing add EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, DEFAULT_FROM_EMAIL<
+1. For real mailing add EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, DEFAULT_FROM_EMAIL
 to "NewsPortal/email_settings.py"<br><br>
 
 2. #Use these commands for subscription test:
