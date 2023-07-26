@@ -119,3 +119,7 @@ class Subscription(models.Model):
     # last_main_resend_date = models.DateTimeField(
     #     default=None
     # )
+
+
+class SchedulingMailData(models.Model):
+    last_send_date = models.DateTimeField()

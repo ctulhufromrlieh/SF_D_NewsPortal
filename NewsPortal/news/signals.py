@@ -4,6 +4,7 @@ from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 
 from .models import Post, Category, PostCategory
+from .tasks import task_send_email_about_post
 
 
 # @receiver(post_save, sender=Post)
@@ -12,31 +13,9 @@ def post_created(instance, action, **kwargs):
     if not action == "post_add":
         return
 
-    categorys = PostCategory.objects.filter(post__id=instance.id).values_list("category", flat=True)
+    # old-style
+    # task_send_email_about_post(instance.id)
 
-    emails = User.objects.filter(
-        subscriptions__category__in=categorys
-    ).values_list('email', flat=True)
+    task_send_email_about_post.delay(instance.id)
 
-    subject = f'Вышла новая статья {instance.title} от {instance.author.user.username}!'
 
-    text_content = (
-        f'Вышел новый пост:'
-        f'Автор: {instance.author.user.username}\n'
-        f'Заголовок: {instance.title}\n'
-        f'Превью: {instance.preview()}\n\n'        
-        f'Ссылка на пост: http://127.0.0.1:8000{instance.get_absolute_url()}'
-    )
-    html_content = (
-        f'Новый пост:<br>'
-        f'Автор: {instance.author.user.username}<br>'
-        f'Заголовок: {instance.title}<br>'
-        f'Превью: {instance.preview()}<br><br>'
-        f'<a href="http://127.0.0.1:8000{instance.get_absolute_url()}">'
-        f'Ссылка на пост</a>'
-    )
-
-    for email in emails:
-        msg = EmailMultiAlternatives(subject, text_content, None, [email])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
