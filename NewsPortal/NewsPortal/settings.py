@@ -160,6 +160,7 @@ LOGIN_REDIRECT_URL = "/news"
 
 ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
 
+# EMail
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -170,3 +171,10 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 # DEFAULT_FROM_EMAIL = "example@yandex.ru"
+
+# Celery
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

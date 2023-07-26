@@ -25,6 +25,7 @@ class PostList(ListView):
     context_object_name = 'news'
     paginate_by = 10
 
+
 class SearchedPostList(ListView):
     model = Post
     ordering = '-creation_date'
@@ -135,6 +136,7 @@ class ArticleDelete(PermissionRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['type'] = 'ARTL'
         return context
+
 
 @login_required
 @csrf_protect

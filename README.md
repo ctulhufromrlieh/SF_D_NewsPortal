@@ -1,36 +1,20 @@
-# SF_D_NewsPortal
-Skill factory D2+ task. Project - News Portal
+# Project features by URLs:<br>
+127.0.0.1:8000/news/ - list of all posts<br>
+127.0.0.1:8000/news/<id>/ - detail data about post with id=<id><br>
+127.0.0.1:8000/news/create/ - create new New**<br>
+127.0.0.1:8000/news/<id>/edit/ - edit current New**<br>
+127.0.0.1:8000/news/<id>/delete/ - delete current New**<br>
+127.0.0.1:8000/articles/create/ - create new Article**<br>
+127.0.0.1:8000/articles/<id>/edit/ - edit current Article**<br>
+127.0.0.1:8000/articles/<id>/delete/ - delete current Article**<br>
+127.0.0.1:8000/news/search/ - search post by filter<br>
+127.0.0.1:8000/news/search/subscriptions/ - manage subscriptions of current user*<br>
 
-D3.6 Task:
-Use these shell commands for bad words initialization:
+127.0.0.1:8000/news/admin/ - admin control panel***<br>
+127.0.0.1:8000/news/accounts/login/ - login to site by user account (if logined user will be redirected to /news/)<br>
+127.0.0.1:8000/news/accounts/logout/ - logout from user account on site*<br>
+127.0.0.1:8000/news/accounts/signup/ - signup new user account<br>
 
-from news.models import * <br>
-BadWord.objects.all().delete() <br>
-BadWord.objects.create(text='енот')<br>
-BadWord.objects.create(text='рубл')<br>
-
-D4.7 Task:
-Updated shell commands (for pagination check)
-
-#D5_8 Task: 
-#Use these commands for Group creation:
-
-from django.contrib.auth.models import Group, Permission <br>
-Group.objects.all().delete() <br>
-group1 = Group.objects.create(name="readers") <br>
-group2 = Group.objects.create(name="authors") <br>
-group2.permissions.add(Permission.objects.get(codename="add_post")) <br>
-group2.permissions.add(Permission.objects.get(codename="change_post")) <br>
-group2.permissions.add(Permission.objects.get(codename="delete_post")) <br>
-
-#D6_7 Task:
-
-1. For real mailing add EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, DEFAULT_FROM_EMAIL
-to "NewsPortal/email_settings.py"<br><br>
-
-2. #Use these commands for subscription test:
-
-user3 = User.objects.create(username="qq", password="qq", email="qq@qq.qq")<br>
-user4 = User.objects.create(username="ww", password="ww", email="ww@ww.ww")<br>
-
-3. for last send date reset clear "django_apscheduler_djangojobexecution" table
+\* - these actions available for signed users<br>
+\*\* - these actions available for signed authors<br> 
+\*\*\* - these actions available for signed admins<br>
