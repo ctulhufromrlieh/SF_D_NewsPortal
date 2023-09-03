@@ -6,6 +6,8 @@ from django.dispatch import receiver
 from .models import Post, Category, PostCategory
 from .tasks import task_send_email_about_post
 
+import platform    # For getting the operating system name
+import subprocess  # For executing a shell command
 
 # @receiver(post_save, sender=Post)
 @receiver(m2m_changed, sender=Post.categories.through)
