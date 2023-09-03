@@ -1,4 +1,5 @@
 {% load static %}
+{% load cache %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,6 +15,7 @@
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     </head>
     <body>
+        {% cache 60 navbar %}
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
            <div class="container">
@@ -41,6 +43,7 @@
                </div>
            </div>
         </nav>
+        {% endcache %}
         <!-- Page content-->
         <div class="container">
            <div class="row">
